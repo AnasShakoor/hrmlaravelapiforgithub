@@ -1,0 +1,38 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Your API",
+        "description": "API documentation for Your Laravel application",
+        "contact": {
+            "name": "Your Name",
+            "email": "your@email.com"
+        },
+        "license": {
+            "name": "Your License",
+            "url": "http://your-license-url.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/home": {
+            "get": {
+                "summary": "this is my summary and now you are getting into it ",
+                "description": "this is the longer description",
+                "operationId": "3fe4598641d1d6b17645c7da38275e29",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    }
+}
