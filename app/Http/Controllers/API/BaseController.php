@@ -8,9 +8,26 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller as Controller;
 
 use function Laravel\Prompts\warning;
+use OpenApi\Annotations as OA;
 
 class BaseController extends Controller
 {
+
+/**
+ * @OA\Info(
+ *     title="Your API",
+ *     version="1.0.0",
+ *     description="API documentation for Your Laravel application",
+ *     @OA\Contact(
+ *         email="your@email.com",
+ *         name="Your Name"
+ *     ),
+ *     @OA\License(
+ *         name="Your License",
+ *         url="http://your-license-url.com"
+ *     )
+ * )
+ */
     /**
      * success response method.
      *

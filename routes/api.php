@@ -35,12 +35,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::resource('Permission', PermissionController::class);
 Route::post('/give_role', [UserController::class, 'assignrole']);
 Route::resource('role', RoleController::class);
-Route::middleware(\App\Http\Middleware\CorsMiddleware::class)->group(function () {
+// Route::middleware(\App\Http\Middleware\CorsMiddleware::class)->group(function () {
 
-    Route::resource('company', CompanyController::class);
-    Route::resource('guard', GuardController::class);
-});
+//     Route::resource('guard', GuardController::class);
+// });
 
 Route::resource('policy', PolicyController::class);
 Route::resource('guardduty', GuardDutyController::class);
 Route::resource('resignation', ResignationController::class);
+// Route::resource('company', CompanyController::class);
+
+Route::get('/home',[CompanyController::class,'index']);
