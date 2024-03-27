@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class CreateCompanyRequest extends FormRequest
@@ -34,26 +34,25 @@ class CreateCompanyRequest extends FormRequest
             // 'user_id' => 'nullable',
             // 'notes' => 'nullable',
 
-
-
-        //  it is just for testing
-            'name' => 'nullable|string',
-            'branch' => 'nullable',
+            //  it is just for testing
+            'name'    => 'nullable|string',
+            'branch'  => 'nullable',
             'address' => 'nullable',
-            'date' => 'nullable',
-            'file' => 'nullable',
+            'date'    => 'nullable',
+            'file'    => 'nullable',
             'contact' => 'nullable',
-            'status' => 'nullable',
+            'status'  => 'nullable',
             'user_id' => 'nullable',
-            'notes' => 'nullable',
+            'notes'   => 'nullable',
         ];
     }
+
     protected function failedValidation(Validator $validator)
     {
         // Custom response or throw an exception
         throw new HttpResponseException(response()->json([
             'message' => 'Validation failed',
-            'errors' => $validator->errors(),
+            'errors'  => $validator->errors(),
         ], 422));
     }
 }

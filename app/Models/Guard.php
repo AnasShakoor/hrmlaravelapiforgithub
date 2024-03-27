@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Guard extends Model
 {
     use HasFactory;
@@ -27,17 +28,20 @@ class Guard extends Model
         'location',
         'tax_payer_id',
         'user_id',
-        'company_id'
+        'company_id',
 
     ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
     public function company()
     {
         return $this->belongsTo(Company::class);
     }
+
     public function guardsduty()
     {
         return $this->hasOne(GuardDuty::class);

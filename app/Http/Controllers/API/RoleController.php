@@ -4,29 +4,25 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
     public function index()
     {
-        $roles = Role::all();    
+        $roles = Role::all();
+
         return response()->json([
             'message' => 'this is the list of all roles',
-            'role' => $roles
+            'role'    => $roles,
         ]);
     }
-
-
 
     public function create()
     {
         return view('roles.create');
     }
-
-
 
     public function store(Request $request)
     {
@@ -46,7 +42,6 @@ class RoleController extends Controller
                 $role->givePermissionTo('list');
             }
 
-
             if ($request->has('delete')) {
                 $role->givePermissionTo('delete');
             }
@@ -56,17 +51,14 @@ class RoleController extends Controller
             }
             DB::commit();
 
-
             // return to your desired page
             //  return view('roles.index', compact('roles'));
 
-
-            //   uncomment me to check if the api is  working 
+            //   uncomment me to check if the api is  working
             return response()->json([
                 'message' => 'Your role has been created with permission',
-                'role' => $role,
-                // 'permissions' => $request->permissions->pluck('name')->toArray(),       
-
+                'role'    => $role,
+                // 'permissions' => $request->permissions->pluck('name')->toArray(),
 
             ]);
         } catch (\Exception $e) {
@@ -74,11 +66,10 @@ class RoleController extends Controller
 
             return response()->json([
                 'message' => 'There is some error',
-                'error' => $e->getMessage()
+                'error'   => $e->getMessage(),
             ]);
         }
     }
-
 
     public function update(Request $request, Role $role)
     {
@@ -86,7 +77,7 @@ class RoleController extends Controller
 
         try {
             $request->validate([
-                'name' => 'required|unique:roles,name,' . $role->id,
+                'name' => 'required|unique:roles,name,'.$role->id,
                 // 'guard_name' => 'nullable|string',
             ]);
 
@@ -96,33 +87,35 @@ class RoleController extends Controller
 
             return response()->json([
                 'message' => 'It is updated ',
-                'role' => $role
+                'role'    => $role,
             ]);
         } catch (\Exception $e) {
             DB::rollback();
 
             return response()->json([
                 'message' => 'There is some error',
-                'error' => $e->getMessage()
+                'error'   => $e->getMessage(),
             ]);
         }
     }
 
-
     public function destroy(Role $role)
     {
         DB::beginTransaction();
+
         try {
             $role->delete();
+
             // return redirect ()->route('')->with('success','DEleted succsessfully');
             return response()->json([
-                'message' => 'your roll is deleted'
+                'message' => 'your roll is deleted',
             ]);
         } catch (\Exception $e) {
             DB::rollback();
+
             return response()->json([
                 'message' => 'there is some error',
-                'error' => $e->getMessage()
+                'error'   => $e->getMessage(),
             ]);
         }
     }

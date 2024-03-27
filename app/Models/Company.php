@@ -10,21 +10,25 @@ class Company extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable =[
-          'name',
-           'branch',
-           'address',
-           'date',
-           'file',
-           'status',
-           'user_id',    
-           'notes',
-           'contact'
+    protected $fillable = [
+        'name',
+        'branch',
+        'address',
+        'date',
+        'file',
+        'status',
+        'user_id',
+        'notes',
+        'contact',
     ];
-    public function user(){
-     return $this->belongsTo(User::class);
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
-     public function guards (){
-     return $this->hasMany(Guard::class);
+
+    public function guards()
+    {
+        return $this->hasMany(Guard::class);
     }
 }

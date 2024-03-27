@@ -2,26 +2,20 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Validator;
-use App\Models\Company;
-use App\Models\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\storage;
-use App\Models\Guard;
 use App\Http\Requests\CreateGuardRequest;
 use App\Http\Requests\CreateUserRequest;
+use App\Models\Company;
+use App\Models\Guard;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\storage;
 
 class GuardController extends Controller
 {
-
     public function index()
     {
         $guards = Guard::all();
-
 
         foreach ($guards as $guard) {
             $guardduty2 = $guard->user;
@@ -38,9 +32,10 @@ class GuardController extends Controller
             $emirates_id_photourl = asset("storage/{$guard->emirates_id_photo}");
             $guard->emirates_id_photo = $emirates_id_photourl;
         }
+
         return response()->json([
             'message' => 'This is the list of all guards',
-            'guards' => $guards,
+            'guards'  => $guards,
         ]);
     }
 
@@ -50,9 +45,9 @@ class GuardController extends Controller
         $guarddata = $guardrequest->validated();
         $userdata = $userrequest->validated();
         $newuserdata = [
-            'password' => '12345678',
-            'user_type' => 'guard',
-            'user_status' => 'active'
+            'password'    => '12345678',
+            'user_type'   => 'guard',
+            'user_status' => 'active',
         ];
 
         $mergeduserdata = array_merge($userdata, $newuserdata);
@@ -76,6 +71,7 @@ class GuardController extends Controller
             $emirates_id_photopath = $photofile->store('company_files', 'public');
             $guarddata['emirates_id_photo'] = $emirates_id_photopath;
         }
+
         try {
             $newuser = User::create($mergeduserdata);
             $companyName = $guarddata['company'];
@@ -84,22 +80,25 @@ class GuardController extends Controller
             $newguard = $newuser->guards()->create(array_merge($guarddata, ['company_id' => $company->id]));
 
             DB::commit();
+
             return response()->json([
                 'message' => 'The guard is created easily',
-                'guard' => $newguard,
-                'user' => $newuser,
+                'guard'   => $newguard,
+                'user'    => $newuser,
             ], 200);
         } catch (\Exception $e) {
             DB::rollback();
+
             return response()->json([
                 'message' => 'There was an error ',
-                'error' => $e->getMessage()
+                'error'   => $e->getMessage(),
             ]);
         }
     }
+
     public function show(string $id)
     {
-        $guard = Guard::with(['user',])->findOrFail($id);
+        $guard = Guard::with(['user'])->findOrFail($id);
         $guardduty3 = $guard->guardsduty;
 
         $photourl = asset("storage/{$guard->photo}");
@@ -114,11 +113,10 @@ class GuardController extends Controller
         $emirates_id_photourl = asset("storage/{$guard->emirates_id_photo}");
         $guard->emirates_id_photo = $emirates_id_photourl;
 
-
         return response()->json(['guard' => $guard], 200);
     }
 
-    public function update(CreateGuardRequest $guardrequest,  Guard $guard)
+    public function update(CreateGuardRequest $guardrequest, Guard $guard)
     {
         $updatedguard = $guardrequest->validated();
         DB::beginTransaction();
@@ -146,29 +144,32 @@ class GuardController extends Controller
             $emirates_id_photopath = $photofile->store('company_files', 'public');
             $guarddata['emirates_id_photo'] = $emirates_id_photopath;
         }
-        try {
 
+        try {
             $companyname = $updatedguard['company'];
             $company = Company::where('name', $companyname)->first();
             $guard->update(array_merge($updatedguard, ['company_id' => $company->id]));
             DB::commit();
+
             return response()->json([
                 'message' => 'Guard has been updated',
-                'guard' => $guard,
-
+                'guard'   => $guard,
 
             ]);
         } catch (\Exception $e) {
             DB::rollback();
+
             return response()->json([
                 'message' => 'There was an error ',
-                'error' => $e->getMessage()
+                'error'   => $e->getMessage(),
             ]);
         }
     }
+
     public function destroy(Guard $guard)
     {
         DB::beginTransaction();
+
         try {
             $guard->forceDelete();
             if ($guard->user) {
@@ -178,14 +179,16 @@ class GuardController extends Controller
                 $guard->guardsduty->forceDelete();
             }
             DB::commit();
+
             return response()->json([
                 'message' => 'Guard and associated user (if exists) deleted successfully',
             ]);
         } catch (\Exception $e) {
             DB::rollback();
+
             return response()->json([
                 'message' => 'There was an error',
-                'error' => $e->getMessage(),
+                'error'   => $e->getMessage(),
             ]);
         }
     }

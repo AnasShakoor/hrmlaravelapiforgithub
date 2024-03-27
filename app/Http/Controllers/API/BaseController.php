@@ -1,33 +1,29 @@
 <?php
 
-
 namespace App\Http\Controllers\API;
 
-
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller as Controller;
-
-use function Laravel\Prompts\warning;
+use App\Http\Controllers\Controller;
 use OpenApi\Annotations as OA;
 
 class BaseController extends Controller
 {
-
-/**
- * @OA\Info(
- *     title="Your API",
- *     version="1.0.0",
- *     description="API documentation for Your Laravel application",
- *     @OA\Contact(
- *         email="your@email.com",
- *         name="Your Name"
- *     ),
- *     @OA\License(
- *         name="Your License",
- *         url="http://your-license-url.com"
- *     )
- * )
- */
+    /**
+     * @OA\Info(
+     *     title="Your API",
+     *     version="1.0.0",
+     *     description="API documentation for Your Laravel application",
+     *
+     *     @OA\Contact(
+     *         email="your@email.com",
+     *         name="Your Name"
+     *     ),
+     *
+     *     @OA\License(
+     *         name="Your License",
+     *         url="http://your-license-url.com"
+     *     )
+     * )
+     */
     /**
      * success response method.
      *
@@ -35,17 +31,14 @@ class BaseController extends Controller
      */
     public function sendResponse($result, $message)
     {
-    	$response = [
+        $response = [
             'success' => true,
             'data'    => $result,
             'message' => $message,
         ];
-  
-
 
         return response()->json($response, 200);
     }
-
 
     /**
      * return error response.
@@ -54,21 +47,19 @@ class BaseController extends Controller
      */
     public function sendError($error, $errorMessages = [], $code = 404)
     {
-    	$response = [
+        $response = [
             'success' => false,
             'message' => $error,
         ];
 
-
-        if(!empty($errorMessages)){
+        if (!empty($errorMessages)) {
             $response['data'] = $errorMessages;
         }
-
 
         return response()->json($response, $code);
     }
 
-   // just checking the github
+    // just checking the github
 
     //just pushing from the github
 }

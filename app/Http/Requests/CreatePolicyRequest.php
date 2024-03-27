@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Http\Requests;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class CreatePolicyRequest extends FormRequest
 {
@@ -25,20 +24,21 @@ class CreatePolicyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=> 'required',
-            'start_time'=> 'required',
-            'end_time'=> 'required',
-            'late_allow'=> 'required',
+            'name'       => 'required',
+            'start_time' => 'required',
+            'end_time'   => 'required',
+            'late_allow' => 'required',
             'early_allow'=> 'required',
-            'deduction'=> 'required',
+            'deduction'  => 'required',
         ];
     }
+
     protected function failedValidation(Validator $validator)
     {
         // Custom response or throw an exception
         throw new HttpResponseException(response()->json([
             'message' => 'Validation failed',
-            'errors' => $validator->errors(),
+            'errors'  => $validator->errors(),
         ], 422));
     }
 }
