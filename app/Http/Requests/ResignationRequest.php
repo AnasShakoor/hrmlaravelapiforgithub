@@ -1,10 +1,10 @@
 <?php
-namespace App\Http\Requests;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Validation\Rule;
 
+namespace App\Http\Requests;
+
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ResignationRequest extends FormRequest
 {
@@ -24,23 +24,22 @@ class ResignationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'emirates_id' => 'required',
-            'guard_name' => 'required',
-            'company_name' => 'required',
+            'emirates_id'      => 'required',
+            'guard_name'       => 'required',
+            'company_name'     => 'required',
             'resignation_date' => 'required',
-            'reason' => 'nullable',
-            'branch' => 'required',
-            'allow_resign' =>'nullable|boolean'
+            'reason'           => 'nullable',
+            'branch'           => 'required',
+            'allow_resign'     => 'nullable|boolean',
         ];
-          
     }
-    
+
     protected function failedValidation(Validator $validator)
     {
         // Custom response or throw an exception
         throw new HttpResponseException(response()->json([
             'message' => 'Validation failed',
-            'errors' => $validator->errors(),
+            'errors'  => $validator->errors(),
         ], 422));
     }
 }

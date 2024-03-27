@@ -1,13 +1,11 @@
 <?php
 
-use Illuminate\Database\DBAL\TimestampType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class() extends Migration {
     /**
      * Run the migrations.
      */
@@ -22,7 +20,7 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->string('photo')->nullable();
             $table->string('passport')->nullable();
-            $table->string ('emirates_id_number')->nullable();
+            $table->string('emirates_id_number')->nullable();
             $table->string('emirates_id_photo')->nullable();
             $table->string('resume')->nullable();
             $table->string('acount_holder_name')->nullable();

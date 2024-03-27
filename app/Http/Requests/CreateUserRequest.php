@@ -1,10 +1,11 @@
 <?php
+
 namespace App\Http\Requests;
-use Illuminate\Foundation\Http\FormRequest;
+
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
-
 
 class CreateUserRequest extends FormRequest
 {
@@ -30,19 +31,18 @@ class CreateUserRequest extends FormRequest
                 Rule::unique('users')->ignore(auth()->id()),
                 // Exclude current user's ID
             ],
-            'password' => 'nullable',
-            'user_type' => 'nullable',
+            'password'    => 'nullable',
+            'user_type'   => 'nullable',
             'user_status' => 'nullable',
         ];
     }
-    
-  
+
     protected function failedValidation(Validator $validator)
     {
         // Custom response or throw an exception
         throw new HttpResponseException(response()->json([
             'message' => 'Validation failed',
-            'errors' => $validator->errors(),
+            'errors'  => $validator->errors(),
         ], 422));
     }
 }

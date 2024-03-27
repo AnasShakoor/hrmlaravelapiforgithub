@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class GuardDuty extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    protected $fillable =[
+    protected $fillable = [
         'emirates_id',
-        'guard', 
+        'guard',
         'company',
         'time_policy',
         'date_joining',
@@ -22,11 +23,13 @@ class GuardDuty extends Model
         'shoes',
         'weapan',
         'others',
-        'file', 
+        'file',
         'notes',
         'guard_id',
     ];
-    public function guards() {
+
+    public function guards()
+    {
         return $this->belongsTo(Guard::class);
     }
 }

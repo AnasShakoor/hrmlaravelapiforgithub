@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Resignation extends Model
 {
     use HasFactory;
@@ -17,5 +18,4 @@ class Resignation extends Model
         'branch',
         'resignation_date',
     ];
-
 }
